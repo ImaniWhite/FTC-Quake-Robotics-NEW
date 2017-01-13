@@ -1,5 +1,5 @@
 
-package org.firstinspires.ftc.robotcontroller.external.samples;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -38,6 +38,7 @@ import com.qualcomm.robotcore.util.Range;
  * Speed down works, but speed up doesn't
  * Need to switch speed to y2
  */
+
 public class Nathan_TeleOp extends OpMode {
 
     double FRval;
@@ -45,9 +46,10 @@ public class Nathan_TeleOp extends OpMode {
     double BRval;
     double BLval;
     double armVal;
-    double sweep1Val;
-    double sweep2Val;
+    double sweepVal;
     double clawVal = .35;
+    double shootOneVal;
+    double shootTwoVal;
 
     //LIST OF PROBLEMOS
     //1. ACCEL DOESN'T WORK, ACTS AS BRAKE FOR BACKWARDS WHY'
@@ -65,6 +67,7 @@ public class Nathan_TeleOp extends OpMode {
 
     final int MAX = 1; //Imani can't remember what the max is, and we can't test the damn robot. SO, I'm giving the max a constant for quick edits later
     final double CLIP_NUM = 0.8;
+    final double SHOOT_CLIP_NUM = .75;
 
     long beginning = 0;
 
@@ -486,6 +489,8 @@ public class Nathan_TeleOp extends OpMode {
         Range.clip(BLval, -CLIP_NUM, CLIP_NUM);
         Range.clip(BRval, -CLIP_NUM, CLIP_NUM);
         Range.clip(FRval, -CLIP_NUM, CLIP_NUM);
+        Range.clip(shootOneVal,-SHOOT_CLIP_NUM, SHOOT_CLIP_NUM);
+        Range.clip(shootTwoVal,-SHOOT_CLIP_NUM, SHOOT_CLIP_NUM);
 
         /**
         FRval = 1;
@@ -494,36 +499,34 @@ public class Nathan_TeleOp extends OpMode {
         BLval = -1;
         */
 
+        boolean imaniDoesNotCareForHerOwnSafety = gamepad2.a;
+        if (imaniDoesNotCareForHerOwnSafety)
+            sweepVal = 1;
+        else if (gamepad2.x)
+            sweepVal = -1;
+        else
+            sweepVal = 0;
+
+
+        boolean imaniDoesCareForHerOwnSafety = gamepad2.b;
+        if (imaniDoesCareForHerOwnSafety) {
+            shootOneVal = -1;
+            shootTwoVal = 1;
+        } //GOOGOGOOGOOGOGOGOOOGOOE+) TOIG TOOGIG TPIOG TOIG
+        else {
+            shootOneVal = 0;
+            shootTwoVal = 0;
+
+        }
+
+        Shooter1.setPower(shootOneVal);
+        Shooter2.setPower(shootTwoVal);
+        sweeper.setPower(sweepVal);
         // write the values to the motors
         FrontRight.setPower(FRval);
         FrontLeft.setPower(FLval);
         BackRight.setPower(BRval);
         BackLeft.setPower(BLval);
-
-        boolean imaniDoesNotCareForHerOwnSafety = gamepad2.a;
-        if (imaniDoesNotCareForHerOwnSafety)
-            sweeper.setPower(1);
-        else
-            sweeper.setPower(0);
-
-        boolean cat = gamepad2.x;
-        if (cat)
-            sweeper.setPower(-1);
-        else
-            sweeper.setPower(0);
-
-
-        boolean imaniDoesCareForHerOwnSafety = gamepad2.b;
-        if (imaniDoesCareForHerOwnSafety) {
-            Shooter1.setPower(-1);
-            Shooter2.setPower(1);
-        } //GOOGOGOOGOOGOGOGOOOGOOE+) TOIG TOOGIG TPIOG TOIG
-        else {
-            Shooter1.setPower(0);
-            Shooter2.setPower(0);
-        }
-
-
 
         //arm.setPower(armVal);
         //claw.setPosition(clawVal);
