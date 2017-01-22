@@ -66,8 +66,9 @@ public class Nathan_TeleOp extends OpMode {
     DcMotor Shooter2;
 
     final int MAX = 1; //Imani can't remember what the max is, and we can't test the damn robot. SO, I'm giving the max a constant for quick edits later
-    final double CLIP_NUM = 0.8;
-    final double SHOOT_CLIP_NUM = .75;
+    final double CLIP_NUM = 0.9;
+    final double SHOOT_CLIP_NUM = 1;
+    final double FORWARD_POWER = 1;
 
     long beginning = 0;
 
@@ -389,10 +390,10 @@ public class Nathan_TeleOp extends OpMode {
             }
             else
             {
-                FLval = 0.5;
-                FRval = 0.5;
-                BLval = 0.5;
-                BRval = 0.5;
+                FLval = FORWARD_POWER;
+                FRval = FORWARD_POWER;
+                BLval = FORWARD_POWER;
+                BRval = FORWARD_POWER;
             }
         else if (y1 < 0)
             if (x1 < -(Math.sqrt(2)/2))
@@ -411,10 +412,10 @@ public class Nathan_TeleOp extends OpMode {
             }
             else
             {
-                FLval = -0.5;
-                FRval = -0.5;
-                BLval = -0.5;
-                BRval = -0.5;
+                FLval = -FORWARD_POWER;
+                FRval = -FORWARD_POWER;
+                BLval = -FORWARD_POWER;
+                BRval = -FORWARD_POWER;
             }
         else
             if (x1 > 0) {
@@ -448,10 +449,10 @@ public class Nathan_TeleOp extends OpMode {
         if (x2 != 0) //Turning
         {
             //Range.scale(x2, -MAX, MAX, -1, 1); //This is unnecessary if, like I expect, the range is already -1 to 1
-            FRval = 0.5*-(x2/(Math.abs(x2)));
-            FLval = 0.5*(x2/(Math.abs(x2)));
-            BRval = 0.5*-(x2/(Math.abs(x2)));
-            BLval = 0.5*(x2/(Math.abs(x2)));
+            FRval = FORWARD_POWER*-(x2/(Math.abs(x2)));
+            FLval = FORWARD_POWER*(x2/(Math.abs(x2)));
+            BRval = FORWARD_POWER*-(x2/(Math.abs(x2)));
+            BLval = FORWARD_POWER*(x2/(Math.abs(x2)));
         }
 
         if (armStickValue != 0) { //"This'll set it to one or negative one
@@ -489,8 +490,6 @@ public class Nathan_TeleOp extends OpMode {
         Range.clip(BLval, -CLIP_NUM, CLIP_NUM);
         Range.clip(BRval, -CLIP_NUM, CLIP_NUM);
         Range.clip(FRval, -CLIP_NUM, CLIP_NUM);
-        Range.clip(shootOneVal,-SHOOT_CLIP_NUM, SHOOT_CLIP_NUM);
-        Range.clip(shootTwoVal,-SHOOT_CLIP_NUM, SHOOT_CLIP_NUM);
 
         /**
         FRval = 1;
@@ -518,6 +517,9 @@ public class Nathan_TeleOp extends OpMode {
             shootTwoVal = 0;
 
         }
+
+        Range.clip(shootOneVal,-SHOOT_CLIP_NUM, SHOOT_CLIP_NUM);
+        Range.clip(shootTwoVal,-SHOOT_CLIP_NUM, SHOOT_CLIP_NUM);
 
         Shooter1.setPower(shootOneVal);
         Shooter2.setPower(shootTwoVal);

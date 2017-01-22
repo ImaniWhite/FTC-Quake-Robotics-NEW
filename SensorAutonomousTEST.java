@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 //package com.qualcomm.ftcrobotcontroller.opmodes; This is what THEY have in their thing
 
+import android.widget.Switch;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -35,6 +37,12 @@ public class SensorAutonomousTEST extends LinearOpMode { //Just declaring this a
     @Override
     public void runOpMode()
     {
+        switch (currentState) {
+            case SETUP:
+                currentState = State.MOVE;
+                break;
+
+    }
 
     }
 

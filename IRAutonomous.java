@@ -1,12 +1,21 @@
 
 package org.firstinspires.ftc.teamcode;
-//package com.qualcomm.ftcrobotcontroller.opmodes; This is what THEY have in their thing
+//package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import android.app.Activity;
+import android.graphics.Color;
+import android.view.View;
+
+import com.qualcomm.ftcrobotcontroller.R;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 
 /**
- * Created by Nathan Kapsin on 12/13/2016.
+ * Created by Nathan Kapsin and Imani White on 12/13/2016.
  * At first at least mostly copied from a FTC powerpoint
  */
 
@@ -16,12 +25,14 @@ enum Step {
 
 public class IRAutonomous extends LinearOpMode { //Just declaring this as OpMode until later
 
-    State currentState = State.SETUP;
+    Step currentState = Step.SETUP;
 
     DcMotor FrontRight;
     DcMotor FrontLeft;
     DcMotor BackRight;
     DcMotor BackLeft;
+
+    ColorSensor colorSensor;
 
     double FRval;
     double FLval;
@@ -36,6 +47,31 @@ public class IRAutonomous extends LinearOpMode { //Just declaring this as OpMode
     @Override
     public void runOpMode()
     {
+        float hsvValues[] = {0F,0F,0F};
+
+        // values is a reference to the hsvValues array.
+        final float values[] = hsvValues;
+
+        // get a reference to the RelativeLayout so we can change the background
+        // color of the Robot Controller app to match the hue detected by the RGB sensor.
+        final View relativeLayout = ((Activity) hardwareMap.appContext).findViewById(R.id.RelativeLayout);
+
+        // bPrevState and bCurrState represent the previous and current state of the button.
+        //boolean bPrevState = false;
+        //boolean bCurrState = false;
+
+        // bLedOn represents the state of the LED.
+        boolean bLedOn = true;
+
+        // get a reference to our ColorSensor object.
+        colorSensor = hardwareMap.colorSensor.get("sensor_color");
+
+        // turn the LED on in the beginning, just so user will know that the sensor is active.
+        colorSensor.enableLed(bLedOn);
+
+        waitForStart();
+        sleep(5000);
+
         while (true) { //PUT IN ACTUAL THING
 
             switch (currentState) { /** Operates by looping through a switch statement on a enum variable. Can be adjusted in a lot of ways, but I'm working with this for right now*/
@@ -49,8 +85,11 @@ public class IRAutonomous extends LinearOpMode { //Just declaring this as OpMode
                     BLval = 1; //Other processes may be needed as well, for example, the robot may need to move forwards a little before turning, wait before moving, etc.
                     BRval = -1; //Alternatively, the robot could move forwards and then strafe/rotate in order to reach a beacon. May be more precise than turning, but a little harder
 
+                    colorSensor.enableLed(bLedOn);
+
                     //if (timerIsDone)
-                    currentState = State.MOVE; /**Each case activates the next for the next loop once it has completed its purpose*/
+                    sleep(500);
+                    currentState = Step.MOVE; /**Each case activates the next for the next loop once it has completed its purpose*/
 
                     break;
                 case MOVE: /**Starts the motors running. The way this program is set up, MOVE is only activated once to get the motors started*/
@@ -62,24 +101,39 @@ public class IRAutonomous extends LinearOpMode { //Just declaring this as OpMode
                     BLval = 1; //In this case, I don't think we need a bounceback between CHECK and MOVE
                     BRval = 1;
 
-                    currentState = State.CHECK; /**Sets it to the next one*/
+                    currentState = Step.CHECK; /**Sets it to the next one*/
                     break;
                 case CHECK: /**This case runs multiples times, waiting until the robot has moved for 1000 milliseconds before stopping*/
                     //if (this.getTime() > 1000)
-                    //currentState = State.STOP;
+                    //currentState = Step.STOP;
 
                     //Added by Nathan: Line checker
                     //I don't know how the robot is going to sense lines, so I'll make my best guess on how it would work
 
-                    //CHECK FOR LINE, CHECK = lineSeen;
+                    // convert the RGB values to HSV values.
+                    Color.RGBToHSV(colorSensor.red(), colorSensor.green(), colorSensor.blue(), hsvValues);
+
+                    // send the info back to driver station using telemetry function.
+                    telemetry.addData("LED", bLedOn ? "On" : "Off");
+                    telemetry.addData("Clear", colorSensor.alpha());
+                    telemetry.addData("Red  ", colorSensor.red());
+                    telemetry.addData("Green", colorSensor.green());
+                    telemetry.addData("Blue ", colorSensor.blue());
+                    telemetry.addData("Hue", hsvValues[0]);
+
+                    if (((colorSensor.red() + colorSensor.blue() + colorSensor.green()) / 3) >= 11)
+                        lineSeen = true;
 
                     if (lineSeen)
-                        currentState = State.HONE_IN;
+                        currentState = Step.HONE_IN;
 
                     break;
                 case HONE_IN:
 
-                    //CHECK FOR LINE, CHECK = lineFound;
+                    if (((colorSensor.red() + colorSensor.blue() + colorSensor.green()) / 3) >= 11)
+                        lineFound = true;
+                    else
+                        lineFound = false;
                     //CHECK FOR BEACON, CHECK = beaconSeen;
 
                     if (lineFound) //AKA if line underneath
@@ -104,7 +158,7 @@ public class IRAutonomous extends LinearOpMode { //Just declaring this as OpMode
                         BRval = 0;
                         BLval = 0;
 
-                        currentState = State.BEACONPRESS;
+                        currentState = Step.BEACONPRESS;
                     }
 
                     break;
@@ -134,7 +188,7 @@ public class IRAutonomous extends LinearOpMode { //Just declaring this as OpMode
                         //Press the button however necessary. Presumably by going forwards a bit then backing up
                     }
 
-                    currentState = State.STOP;
+                    currentState = Step.STOP;
                     break;
                 case STOP:
                     //this.StopDrive();
@@ -147,12 +201,13 @@ public class IRAutonomous extends LinearOpMode { //Just declaring this as OpMode
 
                     break;
                 default: /**Not sure when the default would ever activate here; might as well have it for emergencies/errors*/
-                    //currentState = State.STOP;
+                    //currentState = Step.STOP;
                     break;
             }
             FrontLeft.setPower(FLval);
             FrontRight.setPower(FRval);
             BackLeft.setPower(BLval);
+            BackRight.setPower(BRval);
 
         }
 

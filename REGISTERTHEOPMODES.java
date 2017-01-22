@@ -79,7 +79,9 @@ public class REGISTERTHEOPMODES
         // manager.register("Linear Opmode",          TemplateOpMode_Linear.class);
 
            manager.register("THE TELEOP",             Nathan_TeleOp.class);
-           manager.register("THE AUTOTOTOTO",         GYROSENSOR.class);
+           manager.register("THE GYROAUTO",           GYROSENSOR.class);
+           manager.register("THE HOPEFULAUTO",        IRAutonomous.class);
+           manager.register("LikePlzColor",           SensorHTColor.class);
 
         // Driving Samples
         // manager.register("Teleop POV",             PushbotTeleopPOV_Linear.class);
@@ -95,7 +97,6 @@ public class REGISTERTHEOPMODES
         // manager.register("AdaFruit IMU Cal",       SensorAdafruitIMUCalibration.class);
         // manager.register("AdaFruit Color",         SensorAdafruitRGB.class);
         // manager.register("DIM DIO",                SensorDIO.class);
-        // manager.register("HT Color",               SensorHTColor.class);
         // manager.register("LEGO Light",             SensorLEGOLight.class);
         // manager.register("LEGO Touch",             SensorLEGOTouch.class);
         // manager.register("MR Color",               SensorMRColor.class);
