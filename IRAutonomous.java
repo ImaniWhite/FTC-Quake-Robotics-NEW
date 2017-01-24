@@ -121,7 +121,7 @@ public class IRAutonomous extends LinearOpMode { //Just declaring this as OpMode
                     telemetry.addData("Blue ", colorSensor.blue());
                     telemetry.addData("Hue", hsvValues[0]);
 
-                    if (((colorSensor.red() + colorSensor.blue() + colorSensor.green()) / 3) >= 11)
+                    if (hsvValues[2] > 0.5)
                         lineSeen = true;
 
                     if (lineSeen)
@@ -130,7 +130,7 @@ public class IRAutonomous extends LinearOpMode { //Just declaring this as OpMode
                     break;
                 case HONE_IN:
 
-                    if (((colorSensor.red() + colorSensor.blue() + colorSensor.green()) / 3) >= 11)
+                    if (hsvValues[2] > 0.5)
                         lineFound = true;
                     else
                         lineFound = false;
@@ -208,6 +208,19 @@ public class IRAutonomous extends LinearOpMode { //Just declaring this as OpMode
             FrontRight.setPower(FRval);
             BackLeft.setPower(BLval);
             BackRight.setPower(BRval);
+
+            telemetry.addData("LED", bLedOn ? "On" : "Off");
+            telemetry.addData("Clear", colorSensor.alpha());
+            telemetry.addData("Red  ", colorSensor.red());
+            telemetry.addData("Green", colorSensor.green());
+            telemetry.addData("Blue ", colorSensor.blue());
+            telemetry.addData("Hue", hsvValues[0]);
+            telemetry.addData("Saturation", hsvValues[1]);
+            telemetry.addData("Value", hsvValues[2]);
+            telemetry.addData("Front Left: ", FLval);
+            telemetry.addData("Front Right: ", FRval);
+            telemetry.addData("Back Left: ", BLval);
+            telemetry.addData("Back Right: ", BRval);
 
         }
 

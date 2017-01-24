@@ -41,15 +41,20 @@ import com.qualcomm.robotcore.util.Range;
 
 public class Nathan_TeleOp extends OpMode {
 
-    double FRval;
-    double FLval;
-    double BRval;
-    double BLval;
+    double FRval = 0;
+    double FLval = 0;
+    double BRval = 0;
+    double BLval = 0;
     double armVal;
     double sweepVal;
     double clawVal = .35;
     double shootOneVal;
     double shootTwoVal;
+
+    double lastFRval = 0;
+    double lastFLval = 0;
+    double lastBLval = 0;
+    double lastBRval = 0;
 
     //LIST OF PROBLEMOS
     //1. ACCEL DOESN'T WORK, ACTS AS BRAKE FOR BACKWARDS WHY'
@@ -78,7 +83,7 @@ public class Nathan_TeleOp extends OpMode {
 
     final int WAIT_TIME = 250000000*2;
 
-    boolean itsTheBeginning = true;
+    boolean weAreTurning = false;
 
     public Nathan_TeleOp() {
 
@@ -376,65 +381,193 @@ public class Nathan_TeleOp extends OpMode {
         if (y1 > 0)
             if (x1 < -(Math.sqrt(2)/2))
             {
-                FLval = -1;
-                FRval = 1;
-                BLval = 1;
-                BRval = -1;
+                 /**
+                 if (lastFLval > -1)
+                 FLval = lastFLval - 0.1;
+                 if (lastFRval < 1)
+                 FRval = lastFRval + 0.1;
+                 if (lastBLval < 1)
+                 BLval = lastBLval + 0.1;
+                 if (lastBRval > -1)
+                 BRval = lastBRval - 0.1;
+                 */
+
+                FLval = -Math.round(Math.abs(x1*10))/10;
+                FRval = Math.round(Math.abs(x1*10))/10;
+                BLval = Math.round(Math.abs(x1*10))/10;
+                BRval = -Math.round(Math.abs(x1*10))/10;
             }
             else if (x1 > (Math.sqrt(2)/2))
             {
-                FLval = 1;
-                FRval = -1;
-                BLval = -1;
-                BRval = 1;
+                /**
+
+                 if (lastFLval < 1)
+                 FLval = lastFLval + 0.1;
+                 if (lastFRval > -1)
+                 FRval = lastFRval - 0.1;
+                 if (lastBLval > -1)
+                 BLval = lastBLval - 0.1;
+                 if (lastBRval < 1)
+                 BRval = lastBRval + 0.1;
+
+                 */
+
+                FLval = Math.round(Math.abs(x1*10))/10;
+                FRval = -Math.round(Math.abs(x1*10))/10;
+                BLval = -Math.round(Math.abs(x1*10))/10;
+                BRval = Math.round(Math.abs(x1*10))/10;
             }
             else
             {
-                FLval = FORWARD_POWER;
-                FRval = FORWARD_POWER;
-                BLval = FORWARD_POWER;
-                BRval = FORWARD_POWER;
+                /**
+
+                 if (lastFLval < FORWARD_POWER)
+                 FLval = lastFLval + 0.1;
+                 if (lastFRval < FORWARD_POWER)
+                 FRval = lastFRval + 0.1;
+                 if (lastBLval < FORWARD_POWER)
+                 BLval = lastBLval + 0.1;
+                 if (lastBRval < FOWARD_POWER)
+                 BRval = lastBRval + 0.1;
+
+                 */
+
+                FLval = Math.round(Math.abs(y1*10))/10;
+                FRval = Math.round(Math.abs(y1*10))/10;
+                BLval = Math.round(Math.abs(y1*10))/10;
+                BRval = Math.round(Math.abs(y1*10))/10;
             }
         else if (y1 < 0)
             if (x1 < -(Math.sqrt(2)/2))
             {
-                FLval = -1;
-                FRval = 1;
-                BLval = 1;
-                BRval = -1;
+                /**
+
+                 if (lastFLval > -1)
+                 FLval = lastFLval - 0.1;
+                 if (lastFRval < 1)
+                 FRval = lastFRval + 0.1;
+                 if (lastBLval < 1)
+                 BLval = lastBLval + 0.1;
+                 if (lastBRval > -1)
+                 BRval = lastBRval - 0.1;
+
+                 */
+
+                FLval = -Math.round(Math.abs(x1*10))/10;
+                FRval = Math.round(Math.abs(x1*10))/10;
+                BLval = Math.round(Math.abs(x1*10))/10;
+                BRval = -Math.round(Math.abs(x1*10))/10;
             }
             else if (x1 > (Math.sqrt(2)/2))
             {
-                FLval = 1;
-                FRval = -1;
-                BLval = -1;
-                BRval = 1;
+                /**
+
+                 if (lastFLval < 1)
+                 FLval = lastFLval + 0.1;
+                 if (lastFRval > -1)
+                 FRval = lastFRval - 0.1;
+                 if (lastBLval > -1)
+                 BLval = lastBLval - 0.1;
+                 if (lastBRval < 1)
+                 BRval = lastBRval + 0.1;
+
+                 */
+
+                FLval = Math.round(Math.abs(x1*10))/10;
+                FRval = -Math.round(Math.abs(x1*10))/10;
+                BLval = -Math.round(Math.abs(x1*10))/10;
+                BRval = Math.round(Math.abs(x1*10))/10;
             }
             else
             {
-                FLval = -FORWARD_POWER;
-                FRval = -FORWARD_POWER;
-                BLval = -FORWARD_POWER;
-                BRval = -FORWARD_POWER;
+                 /**
+                 if (lastFLval > -FORWARD_POWER)
+                 FLval = lastFLval - 0.1;
+                 if (lastFRval > -FORWARD_POWER)
+                 FRval = lastFRval - 0.1;
+                 if (lastBLval > -FORWARD_POWER)
+                 BLval = lastBLval - 0.1;
+                 if (lastBRval > -FOWARD_POWER)
+                 BRval = lastBRval - 0.1;
+
+                 */
+
+                FLval = -Math.round(Math.abs(y1*10))/10;
+                FRval = -Math.round(Math.abs(y1*10))/10;
+                BLval = -Math.round(Math.abs(y1*10))/10;
+                BRval = -Math.round(Math.abs(y1*10))/10;
             }
         else
             if (x1 > 0) {
-                FLval = 1;
-                FRval = -1;
-                BLval = -1;
-                BRval = 1;
+
+                /**
+
+                 if (lastFLval < 1)
+                 FLval = lastFLval + 0.1;
+                 if (lastFRval > -1)
+                 FRval = lastFRval - 0.1;
+                 if (lastBLval > -1)
+                 BLval = lastBLval - 0.1;
+                 if (lastBRval < 1)
+                 BRval = lastBRval + 0.1;
+
+                 */
+
+                FLval = Math.round(Math.abs(x1*10))/10;
+                FRval = -Math.round(Math.abs(x1*10))/10;
+                BLval = -Math.round(Math.abs(x1*10))/10;
+                BRval = Math.round(Math.abs(x1*10))/10;
             }
             else if (x1 < 0) {
-                FLval = -1;
-                FRval = 1;
-                BLval = 1;
-                BRval = -1;
+
+                /**
+
+                 if (lastFLval > -1)
+                    FLval = lastFLval - 0.1;
+                 if (lastFRval < 1)
+                    FRval = lastFRval + 0.1;
+                 if (lastBLval < 1)
+                    BLval = lastBLval + 0.1;
+                 if (lastBRval > -1)
+                    BRval = lastBRval - 0.1;
+
+                 */
+
+                FLval = -Math.round(Math.abs(x1*10))/10;
+                FRval = Math.round(Math.abs(x1*10))/10;
+                BLval = Math.round(Math.abs(x1*10))/10;
+                BRval = -Math.round(Math.abs(x1*10))/10;
             }
             else {
+
+                /** Imani likes this
+                if (Math.abs(lastFRval) > 0.05)
+                    FRval = lastFRval*0.75; //lastFRval - 0.1*(Math.abs(lastFRval)/lastFRval);
+                else
+                    FRval = 0;
+
+                if (Math.abs(lastFLval) > 0.05)
+                    FLval = lastFLval*0.75; //lastFLval - 0.1*(Math.abs(lastFLval)/lastFLval);
+                else
+                    FLval = 0;
+
+                if (Math.abs(lastBLval) > 0.05)
+                    BLval = lastBLval*0.75; //lastBLval - 0.1*(Math.abs(lastBLval)/lastBLval);
+                else
+                    BLval = 0;
+
+                if (Math.abs(lastBRval) > 0.05)
+                    BRval = lastBRval*0.75; //lastBRval - 0.1*(Math.abs(lastBRval)/lastBRval);
+                else
+                    BRval = 0;
+                */
+
                 FLval = 0;
                 FRval = 0;
                 BLval = 0;
                 BRval = 0;
+
+
             }
 
         //Setting up so default half speed
@@ -448,20 +581,34 @@ public class Nathan_TeleOp extends OpMode {
         //Right now turning overrides other movement
         if (x2 != 0) //Turning
         {
-            //Range.scale(x2, -MAX, MAX, -1, 1); //This is unnecessary if, like I expect, the range is already -1 to 1
+            weAreTurning = true;
             FRval = FORWARD_POWER*-(x2/(Math.abs(x2)));
             FLval = FORWARD_POWER*(x2/(Math.abs(x2)));
             BRval = FORWARD_POWER*-(x2/(Math.abs(x2)));
             BLval = FORWARD_POWER*(x2/(Math.abs(x2)));
         }
+        /**
+        else
+            if (weAreTurning == true)
+            {
+                weAreTurning = false;
+                FRval = 0;
+                FLval = 0;
+                BRval = 0;
+                BLval = 0;
+            }
+        */
 
+        /**
         if (armStickValue != 0) { //"This'll set it to one or negative one
             armVal = armStickValue/Math.abs(armStickValue);
             armVal /= 4;
         }
         else
             armVal = 0;
+         */
 
+        /**
         if (leftBUMPAH && !rightBUMPAH) //We can use either one
         {
             //if (clawVal < 270)
@@ -476,7 +623,7 @@ public class Nathan_TeleOp extends OpMode {
             //clawVal = 270;
             clawVal = .425;
         }
-
+        */
 
         /**
         //SPEED HAHA LOL NO NEED SPEED ANYOMAW)( U AW)(U A#R)WY4 4y483y 4iu4 pv9WT4R;p9 3tr87;p89
@@ -484,6 +631,13 @@ public class Nathan_TeleOp extends OpMode {
         FLval += (y2*FLval)/MAX;
         BRval += (y2*BRval)/MAX;
         BLval += (y2*BLval)/MAX;
+         */
+
+        /**
+        lastBLval = BLval;
+        lastBRval = BRval;
+        lastFRval = FRval;
+        lastFLval = FLval;
          */
 
         Range.clip(FLval, -CLIP_NUM, CLIP_NUM); //This is to make sure that no STRANGE values somehow get in
@@ -500,15 +654,19 @@ public class Nathan_TeleOp extends OpMode {
 
         boolean imaniDoesNotCareForHerOwnSafety = gamepad2.a;
         if (imaniDoesNotCareForHerOwnSafety)
-            sweepVal = 1;
+            sweepVal = 0.1;
         else if (gamepad2.x)
+            sweepVal = 1;
+        else if (gamepad2.y)
+            sweepVal = -0.1;
+        else if (gamepad2.b)
             sweepVal = -1;
         else
             sweepVal = 0;
 
 
-        boolean imaniDoesCareForHerOwnSafety = gamepad2.b;
-        if (imaniDoesCareForHerOwnSafety) {
+        boolean imaniDoesCareForHerOwnSafety = !(gamepad2.right_bumper);
+        if (!imaniDoesCareForHerOwnSafety) {
             shootOneVal = -1;
             shootTwoVal = 1;
         } //GOOGOGOOGOOGOGOGOOOGOOE+) TOIG TOOGIG TPIOG TOIG
@@ -547,8 +705,16 @@ public class Nathan_TeleOp extends OpMode {
         }
         */
 
-        telemetry.addData("Claw Position", clawVal);
-        telemetry.addData("Text", "*** Robot Data ***");
+        telemetry.addData("Front Left: ", FLval);
+        telemetry.addData("Front Right: ", FRval);
+        telemetry.addData("Back Left: ", BLval);
+        telemetry.addData("Back Right: ", BRval);
+        telemetry.addData("Sweeper: ", sweepVal);
+        telemetry.addData("Shooter 1: ", shootOneVal);
+        telemetry.addData("Shooter 2: ", shootTwoVal);
+        telemetry.addData("xLeft: ", x1);
+        telemetry.addData("yLeft: ", y1);
+        telemetry.addData("xRight: ", x2);
         //telemetry.addData("left tgt pwr",  "left front pwr: " + String.format("%.2f", y1));
         //telemetry.addData("right tgt pwr", "right front pwr: " + String.format("%.2f", x1));
     }

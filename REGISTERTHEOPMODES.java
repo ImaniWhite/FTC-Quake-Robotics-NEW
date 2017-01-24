@@ -82,6 +82,7 @@ public class REGISTERTHEOPMODES
            manager.register("THE GYROAUTO",           GYROSENSOR.class);
            manager.register("THE HOPEFULAUTO",        IRAutonomous.class);
            manager.register("LikePlzColor",           SensorHTColor.class);
+           manager.register("TestTheSensor",          SensorMROpticalDistance.class);
 
         // Driving Samples
         // manager.register("Teleop POV",             PushbotTeleopPOV_Linear.class);
