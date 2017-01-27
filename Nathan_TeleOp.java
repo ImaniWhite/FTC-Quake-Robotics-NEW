@@ -392,10 +392,10 @@ public class Nathan_TeleOp extends OpMode {
                  BRval = lastBRval - 0.1;
                  */
 
-                FLval = -Math.round(Math.abs(x1*10))/10;
-                FRval = Math.round(Math.abs(x1*10))/10;
-                BLval = Math.round(Math.abs(x1*10))/10;
-                BRval = -Math.round(Math.abs(x1*10))/10;
+                FLval = -Math.round(Math.abs(x1*10))/10.0;
+                FRval = Math.round(Math.abs(x1*10))/10.0;
+                BLval = Math.round(Math.abs(x1*10))/10.0;
+                BRval = -Math.round(Math.abs(x1*10))/10.0;
             }
             else if (x1 > (Math.sqrt(2)/2))
             {
@@ -412,10 +412,10 @@ public class Nathan_TeleOp extends OpMode {
 
                  */
 
-                FLval = Math.round(Math.abs(x1*10))/10;
-                FRval = -Math.round(Math.abs(x1*10))/10;
-                BLval = -Math.round(Math.abs(x1*10))/10;
-                BRval = Math.round(Math.abs(x1*10))/10;
+                FLval = Math.round(Math.abs(x1*10))/10.0;
+                FRval = -Math.round(Math.abs(x1*10))/10.0;
+                BLval = -Math.round(Math.abs(x1*10))/10.0;
+                BRval = Math.round(Math.abs(x1*10))/10.0;
             }
             else
             {
@@ -432,10 +432,10 @@ public class Nathan_TeleOp extends OpMode {
 
                  */
 
-                FLval = Math.round(Math.abs(y1*10))/10;
-                FRval = Math.round(Math.abs(y1*10))/10;
-                BLval = Math.round(Math.abs(y1*10))/10;
-                BRval = Math.round(Math.abs(y1*10))/10;
+                FLval = Math.round(Math.abs(y1*10))/10.0;
+                FRval = Math.round(Math.abs(y1*10))/10.0;
+                BLval = Math.round(Math.abs(y1*10))/10.0;
+                BRval = Math.round(Math.abs(y1*10))/10.0;
             }
         else if (y1 < 0)
             if (x1 < -(Math.sqrt(2)/2))
@@ -453,10 +453,10 @@ public class Nathan_TeleOp extends OpMode {
 
                  */
 
-                FLval = -Math.round(Math.abs(x1*10))/10;
-                FRval = Math.round(Math.abs(x1*10))/10;
-                BLval = Math.round(Math.abs(x1*10))/10;
-                BRval = -Math.round(Math.abs(x1*10))/10;
+                FLval = -Math.round(Math.abs(x1*10))/10.0;
+                FRval = Math.round(Math.abs(x1*10))/10.0;
+                BLval = Math.round(Math.abs(x1*10))/10.0;
+                BRval = -Math.round(Math.abs(x1*10))/10.0;
             }
             else if (x1 > (Math.sqrt(2)/2))
             {
@@ -473,10 +473,10 @@ public class Nathan_TeleOp extends OpMode {
 
                  */
 
-                FLval = Math.round(Math.abs(x1*10))/10;
-                FRval = -Math.round(Math.abs(x1*10))/10;
-                BLval = -Math.round(Math.abs(x1*10))/10;
-                BRval = Math.round(Math.abs(x1*10))/10;
+                FLval = Math.round(Math.abs(x1*10))/10.0;
+                FRval = -Math.round(Math.abs(x1*10))/10.0;
+                BLval = -Math.round(Math.abs(x1*10))/10.0;
+                BRval = Math.round(Math.abs(x1*10))/10.0;
             }
             else
             {
@@ -492,10 +492,10 @@ public class Nathan_TeleOp extends OpMode {
 
                  */
 
-                FLval = -Math.round(Math.abs(y1*10))/10;
-                FRval = -Math.round(Math.abs(y1*10))/10;
-                BLval = -Math.round(Math.abs(y1*10))/10;
-                BRval = -Math.round(Math.abs(y1*10))/10;
+                FLval = -Math.round(Math.abs(y1*10))/10.0;
+                FRval = -Math.round(Math.abs(y1*10))/10.0;
+                BLval = -Math.round(Math.abs(y1*10))/10.0;
+                BRval = -Math.round(Math.abs(y1*10))/10.0;
             }
         else
             if (x1 > 0) {
@@ -513,10 +513,10 @@ public class Nathan_TeleOp extends OpMode {
 
                  */
 
-                FLval = Math.round(Math.abs(x1*10))/10;
-                FRval = -Math.round(Math.abs(x1*10))/10;
-                BLval = -Math.round(Math.abs(x1*10))/10;
-                BRval = Math.round(Math.abs(x1*10))/10;
+                FLval = Math.round(Math.abs(x1*10))/10.0;
+                FRval = -Math.round(Math.abs(x1*10))/10.0;
+                BLval = -Math.round(Math.abs(x1*10))/10.0;
+                BRval = Math.round(Math.abs(x1*10))/10.0;
             }
             else if (x1 < 0) {
 
@@ -533,10 +533,10 @@ public class Nathan_TeleOp extends OpMode {
 
                  */
 
-                FLval = -Math.round(Math.abs(x1*10))/10;
-                FRval = Math.round(Math.abs(x1*10))/10;
-                BLval = Math.round(Math.abs(x1*10))/10;
-                BRval = -Math.round(Math.abs(x1*10))/10;
+                FLval = -Math.round(Math.abs(x1*10))/10.0;
+                FRval = Math.round(Math.abs(x1*10))/10.0;
+                BLval = Math.round(Math.abs(x1*10))/10.0;
+                BRval = -Math.round(Math.abs(x1*10))/10.0;
             }
             else {
 
@@ -654,11 +654,11 @@ public class Nathan_TeleOp extends OpMode {
 
         boolean imaniDoesNotCareForHerOwnSafety = gamepad2.a;
         if (imaniDoesNotCareForHerOwnSafety)
-            sweepVal = 0.1;
+            sweepVal = 0.25;
         else if (gamepad2.x)
             sweepVal = 1;
         else if (gamepad2.y)
-            sweepVal = -0.1;
+            sweepVal = -0.25;
         else if (gamepad2.b)
             sweepVal = -1;
         else
