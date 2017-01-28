@@ -77,12 +77,12 @@ public class REGISTERTHEOPMODES
         // Basic Templates
         // manager.register("Iterative Opmode",       TemplateOpMode_Iterative.class);
         // manager.register("Linear Opmode",          TemplateOpMode_Linear.class);
-
            manager.register("THE TELEOP",             Nathan_TeleOp.class);
-           manager.register("THE GYROAUTO",           GYROSENSOR.class);
-           manager.register("THE HOPEFULAUTO",        IRAutonomous.class);
+           manager.register("THE GYRO AUTO",          GYROSENSOR.class);
+           manager.register("THE HOPEFUL AUTO",       IRAutonomous.class);
            manager.register("LikePlzColor",           SensorHTColor.class);
-           manager.register("TestTheSensor",          SensorMROpticalDistance.class);
+           manager.register("TestTheODSensor",        SensorMROpticalDistance.class);
+           manager.register("Servo Test",             ServoConfig.class);
 
         // Driving Samples
         // manager.register("Teleop POV",             PushbotTeleopPOV_Linear.class);
